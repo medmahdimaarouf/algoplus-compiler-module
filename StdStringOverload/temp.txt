@@ -1,0 +1,795 @@
+#ifndef STRING_H
+#define STRING_H
+
+#include<Char.h>
+#include<iostream>
+#include<list>
+
+
+
+class String
+{
+public:
+
+    enum CaseSensitivity{
+        CaseInsensitive,
+        CaseSensitive
+    };
+
+    enum SplitBehavior{
+        KeepEmptyParts,
+        SkipEmptyParts
+    };
+
+    typedef std::list<String> StringList;
+
+    String();
+    String(const Char * unicode);
+    String(Char ch);
+    String(const String &other);
+    String(String &&other);
+    String(const char *str);
+    String(const char chr);
+    String(const Char &ba[6]);
+    ~String();
+    String & append(const String &str);
+    String & append(const Char *str, int len);
+    String & append(Char ch);
+    String & append(const char *str);
+    String & append(const char &ba[0]);
+    const Char at(int position) const;
+   /* std::list<Char>::iterator begin();
+    std::list<Char>::iterator cbegin() const;
+    std::list<Char>::iterator cend() const;
+    void chop(int n);*/
+    void clear();
+    /*int compare(const String &other, CaseSensitivity cs = CaseSensitive) const;
+    std::list<Char>::iterator constBegin() const;
+    const Char * constData() const;
+    std::list<Char>::iterator constEnd() const;*/
+    bool contains(const String &str, CaseSensitivity cs = CaseSensitive) const;
+    bool contains(Char ch, CaseSensitivity cs = CaseSensitive) const;
+    int  count(const String &str, CaseSensitivity cs = CaseSensitive) const;
+    int  count(Char ch, CaseSensitivity cs = CaseSensitive) const;
+    int  count() const;
+    std::list<Char>::iterator crbegin() const;
+    std::list<Char>::iterator crend() const;
+    Char * data();
+    const Char * data() const;
+    std::list<Char>::iterator end();
+    bool endsWith(const String &s, CaseSensitivity cs = CaseSensitive) const;
+    bool endsWith(const StringRef &s, CaseSensitivity cs = CaseSensitive) const;
+    bool endsWith(Latin1String s, CaseSensitivity cs = CaseSensitive) const;
+    bool endsWith(Char c, CaseSensitivity cs = CaseSensitive) const;
+    String &fill(Char ch, int size = -1);
+    int indexOf(const String &str, int from = 0, CaseSensitivity cs = CaseSensitive) const;
+    int indexOf(Char ch, int from = 0, CaseSensitivity cs = CaseSensitive) const;
+    String &insert(int position, const String &str);
+    String &insert(int position, const Char *unicode, int size);
+    String &insert(int position, Char ch);
+    String &insert(int position, const StringRef &str);
+    String &insert(int position, Latin1String str);
+    String &insert(int position, const char *str);
+    String &insert(int position, const ByteArray &str);
+    bool isEmpty() const;
+    bool isNull() const;
+    bool isRightToLeft() const;
+    int lastIndexOf(const String &str, int from = -1, CaseSensitivity cs = CaseSensitive) const;
+    int lastIndexOf(Char ch, int from = -1, CaseSensitivity cs = CaseSensitive) const;
+    String left(int n) const;
+    int length() const;
+    String mid(int position, int n = -1) const;
+    String &prepend(const String &str);
+    String &prepend(const Char *str, int len);
+    String &prepend(Char ch);
+    String &prepend(const StringRef &str);
+    String &prepend(Latin1String str);
+    String &prepend(const char *str);
+    String &prepend(const ByteArray &ba);
+    void push_back(const String &other);
+    void push_back(Char ch);
+    void push_front(const String &other);
+    void push_front(Char ch);
+    std::list<Char>::iterator rbegin();
+    std::list<Char>::iterator rbegin(); const
+    String &remove(int position, int n);
+    String &remove(Char ch, CaseSensitivity cs = CaseSensitive);
+    String &remove(const String &str, CaseSensitivity cs = CaseSensitive);
+    std::list<Char>::iterator rend();
+    String repeated(int times); const
+    String &replace(int position, int n, const String &after);
+    String &replace(int position, int n, const Char *unicode, int size);
+    String &replace(int position, int n, Char after);
+    String &replace(Char before, Char after, CaseSensitivity cs = CaseSensitive);
+    String &replace(const Char *before, int blen, const Char *after, int alen, CaseSensitivity cs = CaseSensitive);
+    String &replace(Latin1String before, Latin1String after, CaseSensitivity cs = CaseSensitive);
+    String &replace(Latin1String before, const String &after, CaseSensitivity cs = CaseSensitive);
+    String &replace(const String &before, const String &after, CaseSensitivity cs = CaseSensitive);
+    String &replace(Char ch, const String &after, CaseSensitivity cs = CaseSensitive);
+    void reserve(int size);
+    void resize(int size);
+    void resize(int size, Char fillChar);
+    String right(int n) const;
+
+    /*
+    String section(Char sep, int start, int end = -1, SectionFlags flags = SectionDefault); const
+    String section(const String &sep, int start, int end = -1, SectionFlags flags = SectionDefault) const;
+    String section(const RegExp &reg, int start, int end = -1, SectionFlags flags = SectionDefault) const;
+    String section(const RegularExpression &re, int start, int end = -1, SectionFlags flags = SectionDefault) const;
+    */
+    /*
+    String &setNum(int n, int base = 10);
+    String &setNum(ushort n, int base = 10);
+    String &setNum(short n, int base = 10);
+    String &setNum(uint n, int base = 10);
+    String &setNum(long n, int base = 10);
+    String &setNum(ulong n, int base = 10);
+    String &setNum(float n, char format = 'g', int precision = 6);
+    String &setNum(double n, char format = 'g', int precision = 6);
+    String &setRawData(const Char *unicode, int size);
+    String &setUnicode(const Char *unicode, int size);
+    String &setUtf16(const ushort *unicode, int size);
+    String simplified() const;
+    int size() const;
+    StringList split(const String &sep, SplitBehavior behavior = KeepEmptyParts, CaseSensitivity cs = CaseSensitive) const;
+    StringList
+    split(Char sep, SplitBehavior behavior = KeepEmptyParts, CaseSensitivity cs = CaseSensitive) const;
+    void
+    sueeze();
+    bool
+    startsWith(const String &s, CaseSensitivity cs = CaseSensitive) const;
+    bool
+    startsWith(const StringRef &s, CaseSensitivity cs = CaseSensitive) const;
+    bool
+    startsWith(Latin1String s, CaseSensitivity cs = CaseSensitive) const;
+    bool
+    startsWith(Char c, CaseSensitivity cs = CaseSensitive) const;
+    void
+    swap(String &other);
+    CFStringRef
+    toCFString() const;
+    String
+    toCaseFolded() const;
+    double
+    toDouble(bool *ok = NULL) const;
+    float
+    toFloat(bool *ok = NULL) const;
+    int
+    toInt(bool *ok = NULL, int base = 10) const;
+    ByteArray
+    toLatin1() const;
+    ByteArray toLocal8Bit();
+    long toLong(bool *ok = _NULLPTR, int base = 10) const;
+    String toLower() const;
+    NSString *
+    toNSString() const;
+    short
+    toShort(bool *ok = _NULLPTR, int base = 10) const;
+    std::string
+    toStdString() const;
+    std::u16string
+    toStdU16String() const;
+    std::u32string
+    toStdU32String() const;
+    std::wstring
+    toStdWString(); const
+    uint
+    toUInt(bool *ok = _NULLPTR, int base = 10) const;
+    ulong
+    toULong(bool *ok = _NULLPTR, int base = 10) const;
+    ulonglong
+    toULongLong(bool *ok = _NULLPTR, int base = 10) const;
+    ushort
+    toUShort(bool *ok = _NULLPTR, int base = 10) const;
+    Vector<uint>
+    toUcs4() const;
+    String
+    toUpper() const;
+    ByteArray
+    toUtf8() const;
+    int
+    toWCharArray(wchar_t *array) const;
+    String
+    trimmed() const;
+    void
+    truncate(int position);
+    const Char *
+    unicode() const;
+    const ushort *
+    utf16() const;
+
+    bool operator!=(Latin1String other) const;
+    bool operator!=(const char *other) const;
+    bool
+    operator!=(const ByteArray &other) const;
+    String &
+    operator+=(const String &other);
+    String &
+    operator+=(Char ch);
+    String &
+    operator+=(const StringRef &str);
+    String &
+    operator+=(Latin1String str);
+    String &
+    operator+=(const char *str);
+    String &
+    operator+=(const ByteArray &ba);
+    String &
+    operator+=(char ch);
+    bool
+    operator<(Latin1String other) const;
+    bool
+    operator<(const char *other) const;
+    bool
+    operator<(const ByteArray &other) const;
+    bool
+    operator<=(Latin1String other) const;
+    bool
+    operator<=(const char *other) const;
+    bool
+    operator<=(const ByteArray &other) const;
+    String &
+    operator=(const String &other);
+    String &
+    operator=(Char ch);
+    String &
+    operator=(Latin1String str);
+    String &
+    operator=(String &&other);
+    String &
+    operator=(const char *str);
+    String &
+    operator=(const ByteArray &ba);
+    String &
+    operator=(char ch);
+    String &
+    operator=(const Null &);
+    bool
+    operator==(Latin1String other) const;
+    bool
+    operator==(const char *other) const;
+    bool
+    operator==(const ByteArray &other) const;
+    bool
+    operator>(Latin1String other) const;
+    bool
+    operator>(const char *other) const;
+    bool
+    operator>(const ByteArray &other) const;
+    bool
+    operator>=(Latin1String other) const;
+    bool
+    operator>=(const char *other) const;
+    bool
+    operator>=(const ByteArray &other) const;
+    CharRef
+    operator[](int position);
+    const Char
+    operator[](int position) const;
+    const Char
+    operator[](uint position) const;
+    CharRef
+    operator[](uint position);
+    */
+private:
+    std::list<Char> * data = NULL;
+};
+
+
+
+#endif // STRING_H
+
+/*
+ *  String();;
+    String(const char *chr);;
+    String(const String &other);;
+    String(char c);;
+    String(const char ** str);;
+    String(const Char ** str);;
+    ~String();;
+    String &	append(const String &str);;
+    String &	append(const char *str, int len);;
+    String &	append(char ch);;
+    String &	append(const char *str);;
+    String &	append(const char ** str);;
+    const char	at(int position); const;
+    void        clear();;
+    bool        contains(const String &str); const;
+    bool        contains(char ch); const;
+    int         count(const String &str); const;
+    int         count(char ch); const;
+    int         count();; const
+    const_reverse_iterator	crbegin(); const;
+    const_reverse_iterator	crend();; const
+    bool        endsWith(const String &s); const;
+    bool        endsWith(const StringRef &s); const;
+    bool        endsWith(char c); const;
+    String &	fill(char ch, int size = -1);;
+    int         indexOf(const String &str, int from = 0 ); const;
+    int         indexOf(char ch, int from = 0 );; const
+    String &	insert(int position, const String &str);;
+    String &	insert(int position, const char *unicode, int size);;
+    String &	insert(int position, char ch);;
+    String &	insert(int position, const char *str);;
+    String &	insert(int position, const char &str[]);;
+    bool        isEmpty(); const;
+    bool        isNull(); const;
+    bool        isRightToLeft(); const;
+    int         lastIndexOf(const String &str, int from = -1 ); const;
+    int         lastIndexOf(char ch, int from = -1 ); const;
+    String      left(int n); const;
+    int         length();; const
+    String      mid(int position, int n = -1); const;
+    String &	prepend(const String &str);;
+    String &	prepend(const char *str, int len);;
+    String &	prepend(char ch);;
+    String &	prepend(const char *str);;
+    String &	prepend(const char &ba[]);;
+    void        push_back(const String &other);;
+    void        push_back(char ch);;
+    void        push_front(const String &other);;
+    void        push_front(char ch);;
+    String &	remove(int position, int n);;
+    String &	remove(char ch );;
+    String &	remove(const String &str );;
+    String      repeated(int times);; const
+    String &	replace(int position, int n, const String &after);;
+    String &	replace(int position, int n, const char *unicode, int size);;
+    String &	replace(int position, int n, char after);;
+    String &	replace(char before, char after );;
+    String &	replace(const char *before, int blen, const char *after, int alen );;
+    String &	replace(const String &before, Latin1String after );;
+    String &	replace(const String &before, const String &after );;
+    String &	replace(char ch, const String &after );;
+    String &	setNum(int n, int base = 10);;
+    String &	setNum(short n, int base = 10);;
+    String &	setNum(long n, int base = 10);;
+    String &	setNum(long n, int base = 10);;
+    String &	setNum(float n, char format = 'g', int precision = 6);;
+    String &	setNum(double n, char format = 'g', int precision = 6);;
+    String &	setRawData(const char *unicode, int size);;
+    String &	setUnicode(const char *unicode, int size);;
+    String      simplified(); const;
+    int         size(); const;
+    StringList	split(const String &sep);const;
+    StringList	split(char sep); const;
+    bool        startsWith(const String &s ); const;
+    bool        startsWith(char c ); const;
+    void        swap(String &other);;
+    String      toCaseFolded();; const
+    double      toDouble(bool *ok);const;
+    float       toFloat(bool *ok); const;
+    String      toHtmlEscaped(); const;
+    int         toInt(bool *ok , int base = 10); const;
+    char *      toLatin1();const;
+    char *      toLocal8Bit();const;
+    long        toLong(bool *ok, int base = 10);const;
+    String      toLower(); const;
+    short       toShort(bool *ok, int base = 10); const;
+    std::string	toStdString(); const;
+    std::u16string	toStdU16String(); const;
+    std::u32string	toStdU32String(); const;
+    std::wstring	toStdWString(); const;
+    String      toUpper(); const;
+    char*       toUtf8(); const;
+    int         toWCharArray(wchar_t *array); const;
+    String      trimmed(); const;
+    void        truncate(int position);;
+    const char *unicode(); const;
+    bool        operator!=(const char *other);const;
+    String &	operator+=(const String &other);;
+    String &	operator+=(char ch);;
+    String &	operator+=(const StringRef &str);;
+    String &	operator+=(const char *str);;
+    bool        operator<(const char *other); const;
+    bool        operator<(const char* &other); const;
+    bool        operator<=(const char *other); const;
+    String &	operator=(const String &other);;
+    String &	operator=(char ch);;
+    String &	operator=(String &&other);;
+    String &	operator=(const char *str);;
+    bool        operator==(const char *other); const;
+    bool        operator>(const char *other); const;
+    bool        operator>=(const char *other);const;
+    char        operator[](int position);;
+ */
+
+
+*****************************************
+#include "String.h"
+
+String::String()
+{
+    data = new std::list<Char>();
+}
+
+String::String(const Char *unicode):this()
+{
+    data->push_front(*unicode);
+
+}
+
+String::String(Char ch):this()
+{
+    data->push_front(ch);
+}
+
+String::String(const String &other)
+{
+
+}
+
+String::String(String &&other)
+{
+
+}
+
+String::String(const char *str)
+{
+
+}
+
+String &&String::append(const String &str)
+{
+
+}
+
+String &&String::append(const Char *str, int len)
+{
+
+}
+
+String &&String::append(Char ch)
+{
+
+}
+
+String &&String::append(const char *str)
+{
+
+}
+
+String &String::append(const char &ba[])
+{
+
+}
+
+const Char String::at(int position) const
+{
+
+}
+
+void String::clear()
+{
+    this->data->clear();
+}
+
+bool String::contains(const String &str, String::CaseSensitivity cs) const
+{
+
+}
+
+bool String::contains(Char ch, String::CaseSensitivity cs) const
+{
+
+}
+
+int String::count(const String &str, String::CaseSensitivity cs) const
+{
+
+}
+
+int String::count(Char ch, String::CaseSensitivity cs) const
+{
+
+}
+
+int String::count() const
+{
+    return this->length();
+}
+
+std::list::iterator String::crbegin() const
+{
+
+}
+
+std::list::iterator String::crend() const
+{
+
+}
+
+const Char *String::data() const
+{
+
+}
+
+std::list::iterator String::end()
+{
+
+}
+
+bool String::endsWith(const String &s, String::CaseSensitivity cs) const
+{
+
+}
+
+bool String::endsWith(const StringRef &s, String::CaseSensitivity cs) const
+{
+
+}
+
+bool String::endsWith(Latin1String s, String::CaseSensitivity cs) const
+{
+
+}
+
+bool String::endsWith(Char c, String::CaseSensitivity cs) const
+{
+
+}
+
+String &&String::fill(Char ch, int size)
+{
+
+}
+
+int String::indexOf(const String &str, int from, String::CaseSensitivity cs) const
+{
+
+}
+
+int String::indexOf(Char ch, int from, String::CaseSensitivity cs) const
+{
+
+}
+
+int String::indexOf(Latin1String str, int from, String::CaseSensitivity cs) const
+{
+
+}
+
+int String::indexOf(const StringRef &str, int from, String::CaseSensitivity cs) const
+{
+
+}
+
+int String::indexOf(const RegExp &rx, int from) const
+{
+
+}
+
+int String::indexOf(RegExp &rx, int from) const
+{
+
+}
+
+int String::indexOf(const RegularExpression &re, int from) const
+{
+
+}
+
+int String::indexOf(const RegularExpression &re, int from, RegularExpressionMatch *rmatch) const
+{
+
+}
+
+String &&String::insert(int position, const String &str)
+{
+
+}
+
+String &&String::insert(int position, const Char *unicode, int size)
+{
+
+}
+
+String &&String::insert(int position, Char ch)
+{
+
+}
+
+String &&String::insert(int position, const StringRef &str)
+{
+
+}
+
+String &&String::insert(int position, Latin1String str)
+{
+
+}
+
+String &&String::insert(int position, const char *str)
+{
+
+}
+
+String &&String::insert(int position, const ByteArray &str)
+{
+
+}
+
+bool String::isEmpty() const
+{
+    return !this->length();
+}
+
+bool String::isNull() const
+{
+    return data == NULL;
+}
+
+bool String::isRightToLeft() const
+{
+
+}
+
+int String::lastIndexOf(const String &str, int from, String::CaseSensitivity cs) const
+{
+
+}
+
+int String::lastIndexOf(Char ch, int from, String::CaseSensitivity cs) const
+{
+
+}
+
+
+String String::left(int n) const
+{
+
+}
+
+String String::mid(int position, int n) const
+{
+
+}
+
+String &&String::prepend(const String &str)
+{
+
+}
+
+String &&String::prepend(const Char *str, int len)
+{
+
+}
+
+String &&String::prepend(Char ch)
+{
+
+}
+
+String &&String::prepend(const StringRef &str)
+{
+
+}
+
+String &&String::prepend(Latin1String str)
+{
+
+}
+
+String &&String::prepend(const char *str)
+{
+
+}
+
+String &&String::prepend(const ByteArray &ba)
+{
+
+}
+
+void String::push_back(const String &other)
+{
+
+}
+
+void String::push_back(Char ch)
+{
+
+}
+
+void String::push_front(const String &other)
+{
+
+}
+
+void String::push_front(Char ch)
+{
+
+}
+
+const String &String::remove(int position, int n)
+{
+
+}
+
+String &&String::remove(Char ch, String::CaseSensitivity cs)
+{
+
+}
+
+String &&String::remove(const String &str, String::CaseSensitivity cs)
+{
+
+}
+
+std::list::iterator String::rend()
+{
+
+}
+
+String String::repeated(int times)
+{
+
+}
+
+const String &String::replace(int position, int n, const String &after)
+{
+
+}
+
+String &&String::replace(int position, int n, const Char *unicode, int size)
+{
+
+}
+
+String &&String::replace(int position, int n, Char after)
+{
+
+}
+
+String &&String::replace(Char before, Char after, String::CaseSensitivity cs)
+{
+
+}
+
+String &&String::replace(const Char *before, int blen, const Char *after, int alen, String::CaseSensitivity cs)
+{
+
+}
+
+String &&String::replace(Latin1String before, Latin1String after, String::CaseSensitivity cs)
+{
+
+}
+
+String &&String::replace(Latin1String before, const String &after, String::CaseSensitivity cs)
+{
+
+}
+
+String &&String::replace(const String &before, const String &after, String::CaseSensitivity cs)
+{
+
+}
+
+String &&String::replace(Char ch, const String &after, String::CaseSensitivity cs)
+{
+
+}
+
+void String::reserve(int size)
+{
+
+}
+
+void String::resize(int size)
+{
+
+}
+
+void String::resize(int size, Char fillChar)
+{
+
+}
+
+String String::right(int n) const
+{
+
+}
+
+
+
+

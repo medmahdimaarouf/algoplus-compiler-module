@@ -1,0 +1,56 @@
+Id_Algo 			--> "Algorithme" <Id_program>
+Directives			--> "Extention" <"nom_fichier"> |
+
+HeaderProgram		-->  Constantes | Types | Variables
+
+	Constantes		    --> "Constantes" < list_Const > 
+								Const --> < Id_Const >  OperatorConst Signe < ConstValue >
+									OperatorConst--> '=' 
+									Signe		 --> '+' | '-' 
+									ConstValue 	 --> <Nombre> | <Reel> | <Str> | <Char>
+
+	Types				--> "Types" <List_types > 
+								Type  --> Enreg | Tab | Mat | Fich
+									Enreg --> <Id_type> ':' "Enregistrement" < List champes > "Fin" <Id_type > | Enregistrement
+										 Champ --> <id_champ>  ':' <Type>
+									Tab	  --> <Id_type> ':' "Tableau" '[' "1" ".." < size_c > ']' "de" < Type_contenu >
+									Mat   --> <Id_type> ':' "Tableau" '[' "1" ".." < size_c > ',' "1" ".. " < size_l >']' "de" < Type_contenu >
+										size_c	--> Id_Const |
+									Fich  --> <Id_type> ':' "Fichier" "de" < Type_contenu>
+	Variables			--> "Variables" < List_Vars > 
+							Var	 --> < Id_Var >  ':' < Id_type >
+Fonction			--> "Fonction" < id_function > '(' <List_Args> ')' ':' < Types_retour > :Constantes | :Types |  :Variables :Debut "Fin" < Id_Fct >
+							Arg  --> < ES >| <Id_Arg> : < Types>
+							ES	 --> "DON" | "RES" | "DON_RES" |  "DONRES"
+
+Procedure			--> Procedure < Nom_Procedure > ( <List_Args> ) :Declaration_Types :Declaration_Vars :Debut Fin < Id_Proc >
+							Arg  --> < ES > <Id_Arg> : < Types>
+							ES	 --> DON | <> 
+						
+Debut				--> "Debut" < Instructions > "Fin" < Id_program >
+							Instructions--> Appele_Proc | Affectation | Si_Alors |Selon_Faire| Pour_Faire | TanteQue | Repeter | with | returnFunction
+									
+									Pour_Faire  --> "Pour" < Reference > "De" < Vi > "A" < Vf > "Faire" |( "Pas" "=" < pas > ) < Instructions > "Fin Pour"
+													Reference --> ('@'.. +| ) Id_Var | (Id_Var[index] ... | Id_Var.id_champ ) | * 
+													Vi,Vf	  --> Expression
+													pas		  --> Reference | Appele_Fct | Nombre
+													
+									Appele_Fct 	--> <Id_Fct> ( < List_Args > )
+									Appele_Proc	--> <Id_Proc>( < List_Args > )				
+													Arg --> ID | Nombre | Expression | Appele_Fct | Const
+													
+									Affectation --> <Reference> "<--" < Expression>
+													// ICI
+													Expression --> ( <Expression> ) | <Expression> <Operator> <Expression> | <Therme> <Operator> <Therme> |  Valeur
+															Valeur   -->  Nombre | Char | Reel | Str | :Appele_Fct 
+															Therme   -->  Valeur | Expression
+															Operator --> + | - | * | / | MOD | DIV | OU | ET | NON 
+													// ICI
+									Si_Alors	--> "Si" <Expression> "Alors" <Instructions> |( "SI NON" <Instructions> ) "Fin Si"
+									Selon_Faire --> "Selon" <Selecteur> "Faire" <list_choix> |( "Si Non" <Instructions> ) "Fin Selon"
+													Selecteur  --> Reference | Appele_Fct
+													Choix	   --> Nombre | Char | Const													
+									TanteQue 	--> TanteQue < Expression > Faire < Instructions > Fin TanteQue
+									Repeter		--> Repeter < Instructions > Jusqu'A < Expression >
+									returnFct	--> <id_fct> "<--" | "retourner"  < Expression >
+									with		--> "Avec" <Expression> "Faire" <Instructions> "Fin" | "Avec"

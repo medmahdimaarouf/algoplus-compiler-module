@@ -1,0 +1,5 @@
+Comments of Lexical Analyser
+* Missing signet numbers detection
+* //Missing Float numbers detection
+* Diffusing between ID and Statments Key words such 'POUR','TANTEQUE','REPETER' ...
+* Key words {"POUR","SI","SELON","TANTEQUE","REPETER","JUSQU_A","FIN","NON","ET","OU","MOD","DIV"}

@@ -1,0 +1,40 @@
+#ifndef SCOPE_H
+#define SCOPE_H
+#include<iostream>
+#include<QDebug>
+#include<map>
+#include<typeinfo>
+#include "Declarations.h"
+class Scope : public ObjectAlgo
+{
+public:
+    Scope();
+    Scope(const Scope &scope);
+    Scope(QString name);
+
+    void AddConstant(Constant constant);
+    void AddType(Type &type);
+    void AddVariable(Variable var);
+
+    Constant getConstant(QString name);
+    Type &getType(QString name);
+    Variable getVariable(QString name);
+    QList<Type *> getTypes()const;
+
+    bool hasConstant(QString name){return listConstants->count(name);}
+    bool hasType(QString name)    {return listTypes->count(name);}
+    bool hasVariable(QString name){return listVariables->count(name);}
+    std::string toString();
+    QString virtual whats(){return what;}
+    QMap<QString,Constant>   * listConstants = NULL;
+
+protected:
+
+    QMap<QString,Variable>   * listVariables = NULL;
+    std::map<QString,Type*>   * listTypes = NULL;
+    //QMap<QString,Type>       * listTypes = NULL;
+    Statment                 * Debut = NULL;
+    QString what = "SCOPE";
+};
+
+#endif // SCOPE_H
