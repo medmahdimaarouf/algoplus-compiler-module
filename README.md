@@ -1,2 +1,2 @@
 # algoplus-compilator-module
- [ AlgoPlus module ] Algorithms compilator features for AlgoPlus
+ [ AlgoPlus module ] Algorithms compiler features for AlgoPlus
